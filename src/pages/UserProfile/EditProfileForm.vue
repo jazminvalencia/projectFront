@@ -1,0 +1,148 @@
+<template>
+  <form>
+    <md-card>
+      <md-card-header :data-background-color="dataBackgroundColor">
+        <h4 class="title">Captura de Prospecto</h4>
+        <p class="category">Capturar los datos datos del prospecto, no olvide incluir los Documentos</p>
+      </md-card-header>
+
+      <md-card-content>
+        <div class="md-layout">
+          <!-- <div class="md-layout-item md-small-size-100 md-size-33">
+            <md-field>
+              <label>Company (disabled)</label>
+              <md-input v-model="disabled" disabled></md-input>
+            </md-field>
+          </div> -->
+          <div class="md-layout-item md-small-size-100 md-size-33">
+            <md-field>
+              <label>*Nombre prospecto</label>
+              <md-input v-model="NombreProspecto" type="text"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100 md-size-50">
+            <md-field>
+              <label>*Primer apellido</label>
+              <md-input v-model="PrimerApellido" type="text"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100 md-size-50">
+            <md-field>
+              <label>Segundo Apellido</label>
+              <md-input v-model="SegundoApellido" type="text"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100 md-size-50">
+            <md-field>
+              <label>*RFC</label>
+              <md-input v-model="rfc" type="text"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100 md-size-100">
+            <md-field>
+              <label>Calle</label>
+              <md-input v-model="Calle" type="text"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100 md-size-33">
+            <md-field>
+              <label>Numero</label>
+              <md-input v-model="Numero" type="text"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100 md-size-33">
+            <md-field>
+              <label>Colonia</label>
+              <md-input v-model="Colonia" type="text"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100 md-size-33">
+            <md-field>
+              <label>Codigo Postal</label>
+              <md-input v-model="CodigoPostal" type="number"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-50 md-size-50">
+            <md-field>
+              <label>Telefono</label>
+              <md-input v-model="Telefono" type="tel"></md-input>
+            </md-field>
+          </div>
+          <div class="md-layout-item md-small-size-100 ">
+            <md-button class="md-raised md-success">*Documentos</md-button>
+          </div>
+          <div class="md-layout-item md-size-100 text-right">
+            <md-button class="md-raised md-success" @click="crearProspecto()">Enviar</md-button>
+            <md-button class="md-raised md-success">Salir</md-button>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+  </form>
+</template>
+<script>
+import axios from 'axios'
+export default {
+  name: "edit-profile-form",
+  props: {
+    dataBackgroundColor: {
+      type: String,
+      default: ""
+    }
+  },
+  data() {
+    return {
+      NombreProspecto: null,
+      PrimerApellido: null,
+      SegundoApellido: null,
+      Calle: null,
+      Numero: null,
+      rfc: null,
+      Colonia: null,
+      Telefono: null,
+      CodigoPostal: null
+    };
+  },
+  methods: {
+    crearProspecto() {
+      var m = this;
+      var url = "http://localhost:5678/api/prospectos/"
+
+      axios.post(url, {
+        nombre: m.NombreProspecto,
+        primerApellido: m.PrimerApellido,
+        segundoApellido: m.SegundoApellido,
+        calle: m.Calle,
+        numero: m.Numero,
+        rfc: m.rfc,
+        colonia : m.Colonia,
+        telefono : m.Telefono,
+        cp: m.CodigoPostal
+      }).then(function(response) {
+          console.log(response);
+          me.limpiar();
+      })
+    },
+    limpiar() {
+      this.NombreProspecto = "",
+      this.PrimerApellido = "",
+      this.SegundoApellido = "",
+      this.Calle = "",
+      this.Numero = "",
+      this.rfc = "",
+      this.Colonia = "",
+      this.Telefono = "",
+      this.CodigoPostal= ""
+    }
+  },
+  mounted() {
+    this.limpiar();
+  //   axios.get("http://localhost:5678/api/tutorials/",{
+  // }
+  // ).then(function(res){
+  //   console.log(res);
+  // })
+  }
+};
+</script>
+<style></style>
