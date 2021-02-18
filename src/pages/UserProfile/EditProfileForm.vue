@@ -8,12 +8,11 @@
 
       <md-card-content>
         <div class="md-layout">
-          <!-- <div class="md-layout-item md-small-size-100 md-size-33">
-            <md-field>
-              <label>Company (disabled)</label>
-              <md-input v-model="disabled" disabled></md-input>
-            </md-field>
-          </div> -->
+          <div class="md-layout-item md-small-size-100 md-size-100" style="color:red;">
+            <ul v-for="error in errorMostrarMsjProspecto" :key="error" v-text="error">
+              <li></li>
+            </ul>
+          </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
               <label>*Nombre prospecto</label>
@@ -100,13 +99,19 @@ export default {
       rfc: null,
       Colonia: null,
       Telefono: null,
-      CodigoPostal: null
+      CodigoPostal: null,
+      errorProspecto: 0,
+      errorMostrarMsjProspecto: []
     };
   },
   methods: {
     crearProspecto() {
       var m = this;
-      var url = "http://localhost:5678/api/prospectos/"
+      var url = "http://localhost:5678/api/prospectos/";
+
+      if (this.validar()) {
+        return;
+      }
 
       axios.post(url, {
         nombre: m.NombreProspecto,
@@ -124,24 +129,37 @@ export default {
       })
     },
     limpiar() {
-      this.NombreProspecto = "",
-      this.PrimerApellido = "",
-      this.SegundoApellido = "",
-      this.Calle = "",
-      this.Numero = "",
-      this.rfc = "",
-      this.Colonia = "",
-      this.Telefono = "",
-      this.CodigoPostal= ""
-    }
+      this.NombreProspecto = "";
+      this.PrimerApellido = "";
+      this.SegundoApellido = "";
+      this.Calle = "";
+      this.Numero = "";
+      this.rfc = "";
+      this.Colonia = "";
+      this.Telefono = "";
+      this.CodigoPostal = "";
+    },
+    validar() {
+      this.errorProspecto = 0;
+      this.errorMostrarMsjProspecto = [];
+      
+      if (!this.NombreProspecto) this.errorMostrarMsjProspecto.push("El nombre no puede estar vacío.");
+      if (!this.PrimerApellido) this.errorMostrarMsjProspecto.push("El primer apellido no puede estar vacío.");
+      if (!this.Calle) this.errorMostrarMsjProspecto.push("El calle no puede estar vacío.");
+      if (!this.Numero) this.errorMostrarMsjProspecto.push("El numero no puede estar vacío.");
+      if (!this.rfc) this.errorMostrarMsjProspecto.push("El RFC no puede estar vacío.");
+      if (!this.Colonia) this.errorMostrarMsjProspecto.push("El colonia no puede estar vacío.");
+      if (!this.Telefono) this.errorMostrarMsjProspecto.push("El telefono no puede estar vacío.");
+      if (!this.CodigoPostal) this.errorMostrarMsjProspecto.push("El codigo postal no puede estar vacío.");
+
+
+      if (this.errorMostrarMsjProspecto.length) this.errorProspecto = 1;
+      return this.errorProspecto;
+
+    },
   },
   mounted() {
     this.limpiar();
-  //   axios.get("http://localhost:5678/api/tutorials/",{
-  // }
-  // ).then(function(res){
-  //   console.log(res);
-  // })
   }
 };
 </script>
