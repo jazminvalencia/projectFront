@@ -39,32 +39,32 @@
           </div>
           <div class="md-layout-item md-small-size-100 md-size-100">
             <md-field>
-              <label>Calle</label>
+              <label>*Calle</label>
               <md-input v-model="Calle" type="text"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
-              <label>Numero</label>
+              <label>*Numero</label>
               <md-input v-model="Numero" type="text"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
-              <label>Colonia</label>
+              <label>*Colonia</label>
               <md-input v-model="Colonia" type="text"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 md-size-33">
             <md-field>
-              <label>Codigo Postal</label>
-              <md-input v-model="CodigoPostal" type="number"></md-input>
+              <label>*Codigo Postal</label>
+              <md-input v-model="CodigoPostal" type="text"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-50 md-size-50">
             <md-field>
-              <label>Telefono</label>
-              <md-input v-model="Telefono" type="tel"></md-input>
+              <label>*Telefono</label>
+              <md-input pattern="[A-Za-z0-9_-]" v-model="Telefono" type="tel"></md-input>
             </md-field>
           </div>
           <div class="md-layout-item md-small-size-100 ">
@@ -143,19 +143,21 @@ export default {
       this.errorProspecto = 0;
       this.errorMostrarMsjProspecto = [];
       
-      if (!this.NombreProspecto) this.errorMostrarMsjProspecto.push("El nombre no puede estar vacío.");
+      if (!this.NombreProspecto)this.errorMostrarMsjProspecto.push("El nombre no puede estar vacío");
+      if(!isNaN(this.NombreProspecto))this.errorMostrarMsjProspecto.push("El nombre no puede ser numerico");
       if (!this.PrimerApellido) this.errorMostrarMsjProspecto.push("El primer apellido no puede estar vacío.");
-      if (!this.Calle) this.errorMostrarMsjProspecto.push("El calle no puede estar vacío.");
+      if(!isNaN(this.PrimerApellido))this.errorMostrarMsjProspecto.push("El nombre no puede ser numerico");
+      if(!isNaN(this.SegundoApellido))this.errorMostrarMsjProspecto.push("El nombre no puede ser numerico");
+      if (!this.Calle)this.errorMostrarMsjProspecto.push("El calle no puede estar vacío.");
       if (!this.Numero) this.errorMostrarMsjProspecto.push("El numero no puede estar vacío.");
       if (!this.rfc) this.errorMostrarMsjProspecto.push("El RFC no puede estar vacío.");
       if (!this.Colonia) this.errorMostrarMsjProspecto.push("El colonia no puede estar vacío.");
-      if (!this.Telefono) this.errorMostrarMsjProspecto.push("El telefono no puede estar vacío.");
+      if (!this.Telefono)this.errorMostrarMsjProspecto.push("El telefono no puede estar vacío");
+      if(isNaN(this.Telefono))this.errorMostrarMsjProspecto.push("El telefono tiene que ser numero");
       if (!this.CodigoPostal) this.errorMostrarMsjProspecto.push("El codigo postal no puede estar vacío.");
-
-
+      if (isNaN(this.CodigoPostal)) this.errorMostrarMsjProspecto.push("El codigo postal no puede tener letras.");
       if (this.errorMostrarMsjProspecto.length) this.errorProspecto = 1;
       return this.errorProspecto;
-
     },
   },
   mounted() {

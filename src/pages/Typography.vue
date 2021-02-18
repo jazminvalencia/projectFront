@@ -9,6 +9,11 @@
           </md-card-header>
           <md-card-content>
             <div class="md-layout">
+              <div class="md-layout-item md-small-size-100 md-size-100" style="color:red;">
+                <ul v-for="error in errorMostrarMsjProspecto" :key="error" v-text="error">
+                  <li></li>
+                </ul>
+              </div>
               <div class="md-layout-item md-small-size-100 md-size-85">
                 <md-field>
                   <label for="movie">Selecciona al prospecto a calificar</label>
@@ -106,7 +111,9 @@ export default {
       idEvaluacion: "",
       idProspecto: "",
       prospectosArray: [],
-      SelectedProspectos: []
+      SelectedProspectos: [],
+      errorProspecto: 0,
+      errorMostrarMsjProspecto: []
     };
   },
   methods: {
@@ -129,6 +136,9 @@ export default {
       });
     },
     actualizarProspectos(idProspecto) {
+      if(this.validar()){
+        return
+      }
       if(this.idEvaluacion == "1") {
         this.estatusId = "2";
       } else {
@@ -139,12 +149,21 @@ export default {
         estatusId: this.estatusId,
         evaluacionId : this.idEvaluacion
       }).then(response => {
+        this.limpiar();
       }).catch(e =>{
         console.log(e);
       } )
+    },
+    limpiar() {
+      this.idProspecto = "";
+      this.SelectedProspectos = [];
+    },
+    validar() {
+      this.errorProspecto = 0;
+      this.errorMostrarMsjProspecto = [];
+       if (!this.idProspecto ) this.errorMostrarMsjProspecto.push("seleccione un prospeco a evaluar");
+       if (!this.idEvaluacion ) this.errorMostrarMsjProspecto.push("seleccione una evaluacion, no puede estar vacío");
     }
-
-
   },
   mounted() {
     this.listarProspectos();
