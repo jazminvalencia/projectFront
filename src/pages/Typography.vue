@@ -9,13 +9,16 @@
           </md-card-header>
           <md-card-content>
             <div class="md-layout">
-              <div class="md-layout-item md-small-size-100 md-size-33">
+              <div class="md-layout-item md-small-size-100 md-size-85">
                 <md-field>
                   <label for="movie">Selecciona al prospecto a calificar</label>
-                  <md-select v-model="idProspecto" @click="selectedprospect(idProspecto)" name="movie" id="movie">
-                    <md-option v-for="prospecto in prospectosArray" :value="prospecto.id" v-bind:key="prospecto.id">{{prospecto.nombre}}</md-option>
+                  <md-select v-model="idProspecto" name="movie" id="movie">
+                    <md-option v-for="prospecto in prospectosArray" :value="prospecto.id" v-bind:key="prospecto.id">{{prospecto.nombre+" "+prospecto.primerApellido+ " "+ prospecto.segundoApellido}}</md-option>
                   </md-select>
                 </md-field>
+              </div>
+              <div class="md-layout-item md-size-10 text-right">
+                  <md-button class="md-raised md-success"  @click="selectedprospect(idProspecto)">Buscar</md-button>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-33">
                 <md-field>
@@ -76,7 +79,7 @@
                 <md-radio v-model="idEvaluacion" value="2" class="md-primary">Rechazar</md-radio>
               </div> 
               <div class="md-layout-item md-size-100 text-right">
-                <md-button class="md-raised md-success">Actualizar</md-button>
+                <md-button class="md-raised md-success" @click="actualizarProspectos(idProspecto)">Actualizar</md-button>
                 <md-button class="md-raised md-success">Salir</md-button>
               </div>
             </div>
@@ -125,11 +128,15 @@ export default {
         console.log(e);
       });
     },
-    actualizarProspectos(idProspecto) {
+    actualizarProspectos(idProspecto,idEvaluacion) {
       let url = "http://localhost:5678/api/prospectos/";
-      axios.put("url",{
-        'id':idProspecto
-      })
+      axios.put(url + idProspecto, {
+        estatusId: this.estatusId,
+        evaluacionId : this.idEvaluacion
+      }).then(response => {
+      }).catch(e =>{
+        console.log(e);
+      } )
     }
 
 
