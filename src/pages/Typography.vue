@@ -97,6 +97,7 @@
 
 <script>
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 export default {
   props: {
@@ -136,6 +137,7 @@ export default {
       });
     },
     actualizarProspectos(idProspecto) {
+      let url = "http://localhost:5678/api/prospectos/";
       if(this.validar()){
         return
       }
@@ -144,18 +146,35 @@ export default {
       } else {
         this.estatusId = "3";
       }
-      let url = "http://localhost:5678/api/prospectos/";
-      axios.put(url + idProspecto, {
-        estatusId: this.estatusId,
-        evaluacionId : this.idEvaluacion
-      }).then(response => {
-        this.limpiar();
-      }).catch(e =>{
-        console.log(e);
-      } )
+      Swal.fire({
+        title: "¿Está seguro de activar este producto?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#4da952",
+        cancelButtonColor: "#9d28b0",
+        confirmButtonText: "Aceptar",
+        cancelButtonText: "Cancelar",
+        confirmButtonClass: "btn btn-success",
+        cancelButtonClass: "btn btn-danger"
+      }).then((willDelete) => {
+        if (willDelete) {
+           axios.put(url + idProspecto, {
+            estatusId: this.estatusId,
+            evaluacionId : this.idEvaluacion
+          }).then(response => {
+            this.limpiar();
+          }).catch(e => {
+            console.log(e);
+          })
+        } else {
+          swal("Your imaginary file is safe!");
+        }
+      });
+     
     },
     limpiar() {
       this.idProspecto = "";
+      this.evaluacionId = "";
       this.SelectedProspectos = [];
     },
     validar() {
