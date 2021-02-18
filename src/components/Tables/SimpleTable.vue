@@ -3,8 +3,8 @@
     <md-table v-model="prospectosArray" :table-header-color="tableHeaderColor">
       <md-table-row slot="md-table-row" slot-scope="{ item }">
         <md-table-cell md-label="Nombre">{{ item.nombre }}</md-table-cell>
-        <md-table-cell md-label="PrimerApellido">{{ item.primerApellido }}</md-table-cell>
-        <md-table-cell md-label="SegundoApellido">{{ item.segundoApellido }}</md-table-cell>
+        <md-table-cell md-label="Primer Apellido">{{ item.primerApellido }}</md-table-cell>
+        <md-table-cell md-label="Segundo Apellido">{{ item.segundoApellido }}</md-table-cell>
         <md-table-cell md-label="Estatus">{{ item.estatusId }}</md-table-cell>
       </md-table-row>
     </md-table>

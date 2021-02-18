@@ -73,7 +73,7 @@
           </div>
           <div class="md-layout-item md-size-100 text-right">
             <md-button class="md-raised md-success" @click="crearProspecto()">Enviar</md-button>
-            <md-button class="md-raised md-success">Salir</md-button>
+            <md-button class="md-raised md-success" @click="limpiar()">Salir</md-button>
           </div>
         </div>
       </md-card-content>
@@ -120,7 +120,7 @@ export default {
         cp: m.CodigoPostal
       }).then(function(response) {
           console.log(response);
-          me.limpiar();
+          m.limpiar();
       })
     },
     limpiar() {
