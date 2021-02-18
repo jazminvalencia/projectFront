@@ -128,7 +128,12 @@ export default {
         console.log(e);
       });
     },
-    actualizarProspectos(idProspecto,idEvaluacion) {
+    actualizarProspectos(idProspecto) {
+      if(this.idEvaluacion == "1") {
+        this.estatusId = "2";
+      } else {
+        this.estatusId = "3";
+      }
       let url = "http://localhost:5678/api/prospectos/";
       axios.put(url + idProspecto, {
         estatusId: this.estatusId,
