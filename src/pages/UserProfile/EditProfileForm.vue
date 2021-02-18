@@ -72,7 +72,7 @@
           </div>
           <div class="md-layout-item md-size-100 text-right">
             <md-button class="md-raised md-success" @click="crearProspecto()">Enviar</md-button>
-            <md-button class="md-raised md-success" @click="limpiar()">Salir</md-button>
+            <md-button class="md-raised md-success" @click="Salir()">Salir</md-button>
           </div>
         </div>
       </md-card-content>
@@ -80,7 +80,9 @@
   </form>
 </template>
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import Swal from 'sweetalert2';
+
 export default {
   name: "edit-profile-form",
   props: {
@@ -126,7 +128,28 @@ export default {
       }).then(function(response) {
           console.log(response);
           m.limpiar();
-      })
+      });
+    },
+    Salir() {
+      Swal.fire({
+        title: "¿Está seguro de salir de la pagina?",
+        text: "al momento de salir de esta pagina se perdera toda la informacion",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#4da952",
+        cancelButtonColor: "#9d28b0",
+        confirmButtonText: "Salir",
+        cancelButtonText: "Cancelar",
+        confirmButtonClass: "btn btn-success",
+        cancelButtonClass: "btn btn-danger"
+      }).then((willDelete) => {
+        if(willDelete.dismiss === Swal.DismissReason.cancel){
+          
+          return
+        }else if(willDelete) {
+          this.limpiar();
+        }
+      });
     },
     limpiar() {
       this.NombreProspecto = "";
@@ -138,11 +161,13 @@ export default {
       this.Colonia = "";
       this.Telefono = "";
       this.CodigoPostal = "";
+      this.errorMostrarMsjProspecto = [];
+      this.errorProspecto = 0;
     },
     validar() {
       this.errorProspecto = 0;
       this.errorMostrarMsjProspecto = [];
-      
+
       if (!this.NombreProspecto)this.errorMostrarMsjProspecto.push("El nombre no puede estar vacío");
       if(!isNaN(this.NombreProspecto))this.errorMostrarMsjProspecto.push("El nombre no puede ser numerico");
       if (!this.PrimerApellido) this.errorMostrarMsjProspecto.push("El primer apellido no puede estar vacío.");
@@ -158,10 +183,9 @@ export default {
       if (isNaN(this.CodigoPostal)) this.errorMostrarMsjProspecto.push("El codigo postal no puede tener letras.");
       if (this.errorMostrarMsjProspecto.length) this.errorProspecto = 1;
       return this.errorProspecto;
-    },
+    }
   },
   mounted() {
-    this.limpiar();
   }
 };
 </script>
