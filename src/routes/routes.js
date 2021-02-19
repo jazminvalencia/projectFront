@@ -4,7 +4,6 @@ import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import TableList from "@/pages/TableList.vue";
 import Typography from "@/pages/Typography.vue";
-import Notifications from "@/pages/Notifications.vue";
 import UpgradeToPRO from "@/pages/UpgradeToPRO.vue";
 
 const routes = [
@@ -32,11 +31,6 @@ const routes = [
         path: "typography",
         name: "Evaluacion de prospectos",
         component: Typography
-      },
-      {
-        path: "notifications",
-        name: "Notifications",
-        component: Notifications
       },
       {
         path: "upgrade",
