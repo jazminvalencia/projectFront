@@ -6,6 +6,12 @@
         <md-table-cell md-label="Primer Apellido">{{ item.primerApellido }}</md-table-cell>
         <md-table-cell md-label="Segundo Apellido">{{ item.segundoApellido }}</md-table-cell>
         <md-table-cell md-label="Estatus">{{ item.estatusId }}</md-table-cell>
+        <md-table-cell md-label="informacion">
+          <md-button class="md-just-icon md-simple md-primary">
+            <md-icon>info</md-icon>
+            <md-tooltip md-direction="top">mas informacion</md-tooltip>
+          </md-button>
+        </md-table-cell>
       </md-table-row>
     </md-table>
   </div>
