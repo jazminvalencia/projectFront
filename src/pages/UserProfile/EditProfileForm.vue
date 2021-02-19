@@ -49,13 +49,13 @@
               <md-input v-model="Numero" type="text"></md-input>
             </md-field>
           </div>
-          <div class="md-layout-item md-small-size-100 md-size-33">
+          <div class="md-layout-item md-small-size-100 md-size-50">
             <md-field>
               <label>*Colonia</label>
               <md-input v-model="Colonia" type="text"></md-input>
             </md-field>
           </div>
-          <div class="md-layout-item md-small-size-100 md-size-33">
+          <div class="md-layout-item md-small-size-100 md-size-50">
             <md-field>
               <label>*Codigo Postal</label>
               <md-input v-model="CodigoPostal" type="text"></md-input>
@@ -64,11 +64,25 @@
           <div class="md-layout-item md-small-size-50 md-size-50">
             <md-field>
               <label>*Telefono</label>
-              <md-input pattern="[A-Za-z0-9_-]" v-model="Telefono" type="tel"></md-input>
+              <md-input v-model="Telefono" type="tel"></md-input>
             </md-field>
           </div>
-          <div class="md-layout-item md-small-size-100 ">
-            <md-button class="md-raised md-success">*Documentos</md-button>
+          <div v-for="docs in counter" :key="docs.id">
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>*Nombre Documento</label>
+                <md-input v-model="docs.nombreDoc" type="tel"></md-input>
+              </md-field>
+            </div>
+            <div class="md-layout-item md-small-size-100 md-size-100">
+              <md-field>
+                <label>Documento</label>
+                <md-file v-model="docs.single" />
+              </md-field>
+            </div>
+          </div>
+          <div class="md-layout-item text-right">
+            <md-button @click="agregarObjetos()" class="md-raised md-success">Agregar documento</md-button>
           </div>
           <div class="md-layout-item md-size-100 text-right">
             <md-button class="md-raised md-success" @click="crearProspecto()">Enviar</md-button>
@@ -80,8 +94,8 @@
   </form>
 </template>
 <script>
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
   name: "edit-profile-form",
@@ -93,6 +107,12 @@ export default {
   },
   data() {
     return {
+      counter: [
+        {
+          single: null,
+          nombreDoc: null
+        }
+      ],
       NombreProspecto: null,
       PrimerApellido: null,
       SegundoApellido: null,
@@ -114,20 +134,36 @@ export default {
       if (this.validar()) {
         return;
       }
-
-      axios.post(url, {
-        nombre: m.NombreProspecto,
-        primerApellido: m.PrimerApellido,
-        segundoApellido: m.SegundoApellido,
-        calle: m.Calle,
-        numero: m.Numero,
-        rfc: m.rfc,
-        colonia : m.Colonia,
-        telefono : m.Telefono,
-        cp: m.CodigoPostal
-      }).then(function(response) {
-          console.log(response);
-          m.limpiar();
+      Swal.fire({
+        title: "¿Está seguro de dar de alta este Prospecto?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#4da952",
+        cancelButtonColor: "#9d28b0",
+        confirmButtonText: "Aceptar",
+        cancelButtonText: "Cancelar",
+        confirmButtonClass: "btn btn-success",
+        cancelButtonClass: "btn btn-danger"
+      }).then((willDelete) => {
+        if (willDelete) {
+          axios.post(url, {
+            nombre: m.NombreProspecto,
+            primerApellido: m.PrimerApellido,
+            segundoApellido: m.SegundoApellido,
+            calle: m.Calle,
+            numero: m.Numero,
+            rfc: m.rfc,
+            colonia : m.Colonia,
+            telefono : m.Telefono,
+            cp: m.CodigoPostal
+          }).then(response => {
+            //qthis.limpiar();
+          }).catch(e => {
+            console.log(e);
+          });
+        } else {
+          swal("Your imaginary file is safe!");
+        }
       });
     },
     Salir() {
@@ -167,12 +203,13 @@ export default {
     validar() {
       this.errorProspecto = 0;
       this.errorMostrarMsjProspecto = [];
+      var i= 0;
 
       if (!this.NombreProspecto)this.errorMostrarMsjProspecto.push("El nombre no puede estar vacío");
       if(!isNaN(this.NombreProspecto))this.errorMostrarMsjProspecto.push("El nombre no puede ser numerico");
       if (!this.PrimerApellido) this.errorMostrarMsjProspecto.push("El primer apellido no puede estar vacío.");
-      if(!isNaN(this.PrimerApellido))this.errorMostrarMsjProspecto.push("El nombre no puede ser numerico");
-      if(!isNaN(this.SegundoApellido))this.errorMostrarMsjProspecto.push("El nombre no puede ser numerico");
+      if(!isNaN(this.PrimerApellido))this.errorMostrarMsjProspecto.push("El primer apellido no puede ser numerico");
+      if(!!this.SegundoApellido && !isNaN(this.SegundoApellido))this.errorMostrarMsjProspecto.push("El Segundo apellido no puede ser numerico");
       if (!this.Calle)this.errorMostrarMsjProspecto.push("El calle no puede estar vacío.");
       if (!this.Numero) this.errorMostrarMsjProspecto.push("El numero no puede estar vacío.");
       if (!this.rfc) this.errorMostrarMsjProspecto.push("El RFC no puede estar vacío.");
@@ -181,8 +218,20 @@ export default {
       if(isNaN(this.Telefono))this.errorMostrarMsjProspecto.push("El telefono tiene que ser numero");
       if (!this.CodigoPostal) this.errorMostrarMsjProspecto.push("El codigo postal no puede estar vacío.");
       if (isNaN(this.CodigoPostal)) this.errorMostrarMsjProspecto.push("El codigo postal no puede tener letras.");
+
+      for ( i ;  i < this.counter.length; i++){
+        if(!this.counter[i].single){
+          this.errorMostrarMsjProspecto.push("debe de subir un archivo ");
+        }
+        if(!this.counter[i].nombreDoc){
+          this.errorMostrarMsjProspecto.push("debe de tener nombre el documento ");
+        }
+      }
       if (this.errorMostrarMsjProspecto.length) this.errorProspecto = 1;
       return this.errorProspecto;
+    },
+    agregarObjetos() {
+      this.counter.push({ single: null, nombreDoc: null });
     }
   },
   mounted() {

@@ -82,10 +82,16 @@
               <div class="md-layout-item md-small-size-100 md-size-33">
                 <md-radio v-model="idEvaluacion" value="1" class="md-primary">Autorizar</md-radio>
                 <md-radio v-model="idEvaluacion" value="2" class="md-primary">Rechazar</md-radio>
-              </div> 
+              </div>
+              <div v-if="idEvaluacion == 2" class="md-layout-item md-small-size-50 md-size-100">
+                <md-field>
+                  <label>*Descripcion</label>
+                  <md-input v-model="Telefono" type="text"></md-input>
+                </md-field>
+              </div>
               <div class="md-layout-item md-size-100 text-right">
                 <md-button class="md-raised md-success" @click="actualizarProspectos(idProspecto)">Actualizar</md-button>
-                <md-button class="md-raised md-success">Salir</md-button>
+                <md-button class="md-raised md-success" @click="Salir()">Salir</md-button>
               </div>
             </div>
           </md-card-content>
@@ -97,7 +103,7 @@
 
 <script>
 import axios from "axios";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 export default {
   props: {
@@ -111,6 +117,7 @@ export default {
       seleccionar: "",
       idEvaluacion: "",
       idProspecto: "",
+      descripcion: "",
       prospectosArray: [],
       SelectedProspectos: [],
       errorProspecto: 0,
@@ -127,7 +134,7 @@ export default {
         console.log(e);
       });
     },
-   async selectedprospect(idProspecto) {
+    async selectedprospect(idProspecto) {
       let url = "http://localhost:5678/api/prospectos/";
       await axios.get(url + idProspecto).then(response => {
         var respuesta = response.data;
@@ -138,16 +145,16 @@ export default {
     },
     actualizarProspectos(idProspecto) {
       let url = "http://localhost:5678/api/prospectos/";
-      if(this.validar()){
-        return
+      if (this.validar()) {
+        return;
       }
-      if(this.idEvaluacion == "1") {
+      if (this.idEvaluacion == "1") {
         this.estatusId = "2";
       } else {
         this.estatusId = "3";
       }
       Swal.fire({
-        title: "¿Está seguro de activar este producto?",
+        title: "¿Está seguro de actualizar este prospecto?",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#4da952",
@@ -158,19 +165,18 @@ export default {
         cancelButtonClass: "btn btn-danger"
       }).then((willDelete) => {
         if (willDelete) {
-           axios.put(url + idProspecto, {
+          axios.put(url + idProspecto, {
             estatusId: this.estatusId,
             evaluacionId : this.idEvaluacion
           }).then(response => {
             this.limpiar();
           }).catch(e => {
             console.log(e);
-          })
+          });
         } else {
           swal("Your imaginary file is safe!");
         }
       });
-     
     },
     limpiar() {
       this.idProspecto = "";
@@ -182,6 +188,32 @@ export default {
       this.errorMostrarMsjProspecto = [];
        if (!this.idProspecto ) this.errorMostrarMsjProspecto.push("seleccione un prospeco a evaluar");
        if (!this.idEvaluacion ) this.errorMostrarMsjProspecto.push("seleccione una evaluacion, no puede estar vacío");
+       if (this.idEvaluacion == "2"){
+        if (!this.descripcion ) this.errorMostrarMsjProspecto.push("la descripcion no puede ser vacio");
+       }
+
+       if (this.errorMostrarMsjProspecto.length) this.errorProspecto = 1;
+      return this.errorProspecto;
+    },
+    Salir() {
+      Swal.fire({
+        title: "¿Está seguro de salir de la pagina?",
+        text: "al momento de salir de esta pagina se perdera toda la informacion",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#4da952",
+        cancelButtonColor: "#9d28b0",
+        confirmButtonText: "Salir",
+        cancelButtonText: "Cancelar",
+        confirmButtonClass: "btn btn-success",
+        cancelButtonClass: "btn btn-danger"
+      }).then((willDelete) => {
+        if (willDelete.dismiss === Swal.DismissReason.cancel) {
+          return;
+        } else if (willDelete) {
+          this.limpiar();
+        }
+      });
     }
   },
   mounted() {
