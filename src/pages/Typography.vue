@@ -80,13 +80,13 @@
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-33">
-                <md-radio v-model="idEvaluacion" value="1" class="md-primary">Autorizar</md-radio>
+                <md-radio v-model="idEvaluacion" value="1"  class="md-primary">Autorizar</md-radio>
                 <md-radio v-model="idEvaluacion" value="2" class="md-primary">Rechazar</md-radio>
               </div>
               <div v-if="idEvaluacion == 2" class="md-layout-item md-small-size-50 md-size-100">
                 <md-field>
                   <label>*Descripcion</label>
-                  <md-input v-model="Telefono" type="text"></md-input>
+                  <md-input v-model="descripcionRechazo" type="text"></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-size-100 text-right">
@@ -115,9 +115,9 @@ export default {
   data() {
     return {
       seleccionar: "",
-      idEvaluacion: "",
+      idEvaluacion: "2",
       idProspecto: "",
-      descripcion: "",
+      descripcionRechazo: "",
       prospectosArray: [],
       SelectedProspectos: [],
       errorProspecto: 0,
@@ -150,6 +150,7 @@ export default {
       }
       if (this.idEvaluacion == "1") {
         this.estatusId = "2";
+        this.descripcionRechazo = null;
       } else {
         this.estatusId = "3";
       }
@@ -169,7 +170,8 @@ export default {
         } else if (willDelete) {
           axios.put(url + idProspecto, {
             estatusId: this.estatusId,
-            evaluacionId : this.idEvaluacion
+            evaluacionId : this.idEvaluacion,
+            descripcionRechazo: this.descripcionRechazo,
           }).then(response => {
             this.limpiar();
           }).catch(e => {
@@ -180,19 +182,19 @@ export default {
     },
     limpiar() {
       this.idProspecto = "";
-      this.evaluacionId = "";
+      this.evaluacionId = "2";
+      this.descripcionRechazo = "";
       this.SelectedProspectos = [];
     },
     validar() {
       this.errorProspecto = 0;
       this.errorMostrarMsjProspecto = [];
-       if (!this.idProspecto ) this.errorMostrarMsjProspecto.push("seleccione un prospeco a evaluar");
-       if (!this.idEvaluacion ) this.errorMostrarMsjProspecto.push("seleccione una evaluacion, no puede estar vacío");
-       if (this.idEvaluacion == "2"){
-        if (!this.descripcion ) this.errorMostrarMsjProspecto.push("la descripcion no puede ser vacio");
-       }
-
-       if (this.errorMostrarMsjProspecto.length) this.errorProspecto = 1;
+      if (!this.idProspecto ) this.errorMostrarMsjProspecto.push("seleccione un prospeco a evaluar");
+      if (!this.idEvaluacion ) this.errorMostrarMsjProspecto.push("seleccione una evaluacion, no puede estar vacío");
+      if (this.idEvaluacion == "2" && !this.descripcionRechazo){
+        this.errorMostrarMsjProspecto.push("la descripcion no puede ser vacio");
+      }
+      if (this.errorMostrarMsjProspecto.length) this.errorProspecto = 1;
       return this.errorProspecto;
     },
     Salir() {
