@@ -199,6 +199,12 @@ export default {
       this.CodigoPostal = "";
       this.errorMostrarMsjProspecto = [];
       this.errorProspecto = 0;
+      this.counter = [
+        {
+          single: null,
+          nombreDoc: null
+        }
+      ];
     },
     validar() {
       this.errorProspecto = 0;
