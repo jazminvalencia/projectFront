@@ -164,7 +164,9 @@ export default {
         confirmButtonClass: "btn btn-success",
         cancelButtonClass: "btn btn-danger"
       }).then((willDelete) => {
-        if (willDelete) {
+        if (willDelete.dismiss === Swal.DismissReason.cancel) {
+          return;
+        } else if (willDelete) {
           axios.put(url + idProspecto, {
             estatusId: this.estatusId,
             evaluacionId : this.idEvaluacion
@@ -173,8 +175,6 @@ export default {
           }).catch(e => {
             console.log(e);
           });
-        } else {
-          swal("Your imaginary file is safe!");
         }
       });
     },

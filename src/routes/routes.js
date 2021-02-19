@@ -40,14 +40,6 @@ const routes = [
         name: "Icons",
         component: Icons
       },
-      // {
-      //   path: "maps",
-      //   name: "Maps",
-      //   meta: {
-      //     hideFooter: true
-      //   },
-      //   component: Maps
-      // },
       {
         path: "notifications",
         name: "Notifications",

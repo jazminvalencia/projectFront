@@ -145,7 +145,9 @@ export default {
         confirmButtonClass: "btn btn-success",
         cancelButtonClass: "btn btn-danger"
       }).then((willDelete) => {
-        if (willDelete) {
+        if (willDelete.dismiss === Swal.DismissReason.cancel) {
+          return;
+        } else if (willDelete) {
           axios.post(url, {
             nombre: m.NombreProspecto,
             primerApellido: m.PrimerApellido,
@@ -157,12 +159,10 @@ export default {
             telefono : m.Telefono,
             cp: m.CodigoPostal
           }).then(response => {
-            //qthis.limpiar();
+            this.limpiar();
           }).catch(e => {
             console.log(e);
           });
-        } else {
-          swal("Your imaginary file is safe!");
         }
       });
     },
