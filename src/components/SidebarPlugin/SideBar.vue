@@ -12,13 +12,7 @@
         </div>
       </a>
 
-      <a
-        href="https://www.creative-tim.com/product/vue-material-dashboard"
-        target="_blank"
-        class="simple-text logo-normal"
-      >
-        {{ title }}
-      </a>
+      <a target="_blank" class="simple-text logo-normal"> {{ title }}</a>
     </div>
     <div class="sidebar-wrapper">
       <slot name="content"></slot>
@@ -47,7 +41,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Vue MD"
+      default: "CONCREDITO"
     },
     sidebarBackgroundImage: {
       type: String,
@@ -55,7 +49,7 @@ export default {
     },
     imgLogo: {
       type: String,
-      default: require("@/assets/img/vue-logo.png")
+      default: require("@/assets/img/concredito.png")
     },
     sidebarItemColor: {
       type: String,
@@ -89,9 +83,5 @@ export default {
 };
 </script>
 <style>
-@media screen and (min-width: 991px) {
-  .nav-mobile-menu {
-    display: none;
-  }
-}
+
 </style>
