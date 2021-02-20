@@ -3,13 +3,23 @@
     <md-card>
       <md-card-header :data-background-color="dataBackgroundColor">
         <h4 class="title">Captura de Prospecto</h4>
-        <p class="category">Capturar los datos datos del prospecto, no olvide incluir los Documentos</p>
+        <p class="category">
+          Capturar los datos datos del prospecto, no olvide incluir los
+          Documentos
+        </p>
       </md-card-header>
 
       <md-card-content>
         <div class="md-layout">
-          <div class="md-layout-item md-small-size-100 md-size-100" style="color:red;">
-            <ul v-for="error in errorMostrarMsjProspecto" :key="error" v-text="error">
+          <div
+            class="md-layout-item md-small-size-100 md-size-100"
+            style="color:red;"
+          >
+            <ul
+              v-for="error in errorMostrarMsjProspecto"
+              :key="error"
+              v-text="error"
+            >
               <li></li>
             </ul>
           </div>
@@ -82,11 +92,17 @@
             </div>
           </div>
           <div class="md-layout-item text-right">
-            <md-button @click="agregarObjetos()" class="md-raised md-success">Agregar documento</md-button>
+            <md-button @click="agregarObjetos()" class="md-raised md-success">
+              Agregar documento
+            </md-button>
           </div>
           <div class="md-layout-item md-size-100 text-right">
-            <md-button class="md-raised md-success" @click="crearProspecto()">Enviar</md-button>
-            <md-button class="md-raised md-success" @click="Salir()">Salir</md-button>
+            <md-button class="md-raised md-success" @click="crearProspecto()">
+              Enviar
+            </md-button>
+            <md-button class="md-raised md-success" @click="Salir()">
+              Salir
+            </md-button>
           </div>
         </div>
       </md-card-content>
@@ -149,20 +165,22 @@ export default {
           return;
         } else if (willDelete) {
           axios.post(url, {
-            nombre: m.NombreProspecto,
-            primerApellido: m.PrimerApellido,
-            segundoApellido: m.SegundoApellido,
-            calle: m.Calle,
-            numero: m.Numero,
-            rfc: m.rfc,
-            colonia : m.Colonia,
-            telefono : m.Telefono,
-            cp: m.CodigoPostal
-          }).then(response => {
-            this.limpiar();
-          }).catch(e => {
-            console.log(e);
-          });
+              nombre: m.NombreProspecto,
+              primerApellido: m.PrimerApellido,
+              segundoApellido: m.SegundoApellido,
+              calle: m.Calle,
+              numero: m.Numero,
+              rfc: m.rfc,
+              colonia: m.Colonia,
+              telefono: m.Telefono,
+              cp: m.CodigoPostal
+            })
+            .then(response => {
+              this.limpiar();
+            })
+            .catch(e => {
+              console.log(e);
+            });
         }
       });
     },
@@ -179,10 +197,9 @@ export default {
         confirmButtonClass: "btn btn-success",
         cancelButtonClass: "btn btn-danger"
       }).then((willDelete) => {
-        if(willDelete.dismiss === Swal.DismissReason.cancel){
-          
-          return
-        }else if(willDelete) {
+        if (willDelete.dismiss === Swal.DismissReason.cancel) {
+          return;
+        } else if(willDelete) {
           this.limpiar();
         }
       });
@@ -209,29 +226,52 @@ export default {
     validar() {
       this.errorProspecto = 0;
       this.errorMostrarMsjProspecto = [];
-      var i= 0;
+      var i = 0;
 
-      if (!this.NombreProspecto)this.errorMostrarMsjProspecto.push("El nombre no puede estar vacío");
-      if(!isNaN(this.NombreProspecto))this.errorMostrarMsjProspecto.push("El nombre no puede ser numerico");
-      if (!this.PrimerApellido) this.errorMostrarMsjProspecto.push("El primer apellido no puede estar vacío.");
-      if(!isNaN(this.PrimerApellido))this.errorMostrarMsjProspecto.push("El primer apellido no puede ser numerico");
-      if(!!this.SegundoApellido && !isNaN(this.SegundoApellido))this.errorMostrarMsjProspecto.push("El Segundo apellido no puede ser numerico");
-      if (!this.Calle)this.errorMostrarMsjProspecto.push("El calle no puede estar vacío.");
-      if (!this.Numero) this.errorMostrarMsjProspecto.push("El numero no puede estar vacío.");
-      if (!this.rfc) this.errorMostrarMsjProspecto.push("El RFC no puede estar vacío.");
-      if (!this.Colonia) this.errorMostrarMsjProspecto.push("El colonia no puede estar vacío.");
-      if (!this.Telefono)this.errorMostrarMsjProspecto.push("El telefono no puede estar vacío");
-      if(isNaN(this.Telefono))this.errorMostrarMsjProspecto.push("El telefono tiene que ser numero");
-      if (!this.CodigoPostal) this.errorMostrarMsjProspecto.push("El codigo postal no puede estar vacío.");
-      if (isNaN(this.CodigoPostal)) this.errorMostrarMsjProspecto.push("El codigo postal no puede tener letras.");
+      if (!this.NombreProspecto)
+        this.errorMostrarMsjProspecto.push("El nombre no puede estar vacío");
+      if (!isNaN(this.NombreProspecto))
+        this.errorMostrarMsjProspecto.push("El nombre no puede ser numerico");
+      if (!this.PrimerApellido)
+        this.errorMostrarMsjProspecto.push(
+          "El primer apellido no puede estar vacío."
+        );
+      if (!isNaN(this.PrimerApellido))
+        this.errorMostrarMsjProspecto.push(
+          "El primer apellido no puede ser numerico"
+        );
+      if (!!this.SegundoApellido && !isNaN(this.SegundoApellido))
+        this.errorMostrarMsjProspecto.push(
+          "El Segundo apellido no puede ser numerico"
+        );
+      if (!this.Calle)
+        this.errorMostrarMsjProspecto.push("El calle no puede estar vacío.");
+      if (!this.Numero)
+        this.errorMostrarMsjProspecto.push("El numero no puede estar vacío.");
+      if (!this.rfc)
+        this.errorMostrarMsjProspecto.push("El RFC no puede estar vacío.");
+      if (!this.Colonia)
+        this.errorMostrarMsjProspecto.push("El colonia no puede estar vacío.");
+      if (!this.Telefono)
+        this.errorMostrarMsjProspecto.push("El telefono no puede estar vacío");
+      if (isNaN(this.Telefono))
+        this.errorMostrarMsjProspecto.push("El telefono tiene que ser numero");
+      if (!this.CodigoPostal)
+        this.errorMostrarMsjProspecto.push(
+          "El codigo postal no puede estar vacío."
+        );
+      if (isNaN(this.CodigoPostal))
+        this.errorMostrarMsjProspecto.push(
+          "El codigo postal no puede tener letras."
+        );
 
-      for ( i ;  i < this.counter.length; i++){
-        if(!this.counter[i].single){
+      for (i; i < this.counter.length; i++) {
+        if (!this.counter[i].single)
           this.errorMostrarMsjProspecto.push("debe de subir un archivo ");
-        }
-        if(!this.counter[i].nombreDoc){
-          this.errorMostrarMsjProspecto.push("debe de tener nombre el documento ");
-        }
+        if (!this.counter[i].nombreDoc)
+          this.errorMostrarMsjProspecto.push(
+            "debe de tener nombre el documento"
+          );
       }
       if (this.errorMostrarMsjProspecto.length) this.errorProspecto = 1;
       return this.errorProspecto;
@@ -239,8 +279,6 @@ export default {
     agregarObjetos() {
       this.counter.push({ single: null, nombreDoc: null });
     }
-  },
-  mounted() {
   }
 };
 </script>
