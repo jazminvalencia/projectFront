@@ -5,12 +5,21 @@
         <md-card>
           <md-card-header data-background-color="green">
             <h4 class="title">Evaluacion de Prospectos</h4>
-            <p class="category">Recuerde seleccionar el nombre del prospecto para calificarlo</p>
+            <p class="category">
+              Recuerde seleccionar el nombre del prospecto para calificarlo
+            </p>
           </md-card-header>
           <md-card-content>
             <div class="md-layout">
-              <div class="md-layout-item md-small-size-100 md-size-100" style="color:red;">
-                <ul v-for="error in errorMostrarMsjProspecto" :key="error" v-text="error">
+              <div
+                class="md-layout-item md-small-size-100 md-size-100"
+                style="color:red;"
+              >
+                <ul
+                  v-for="error in errorMostrarMsjProspecto"
+                  :key="error"
+                  v-text="error"
+                >
                   <li></li>
                 </ul>
               </div>
@@ -18,53 +27,91 @@
                 <md-field>
                   <label for="movie">Selecciona al prospecto a calificar</label>
                   <md-select v-model="idProspecto" name="movie" id="movie">
-                    <md-option v-for="prospecto in prospectosArray" :value="prospecto.id" v-bind:key="prospecto.id">{{prospecto.nombre+" "+prospecto.primerApellido+ " "+ prospecto.segundoApellido}}</md-option>
+                    <md-option
+                      v-for="prospecto in prospectosArray"
+                      :value="prospecto.id"
+                      v-bind:key="prospecto.id"
+                    >
+                      {{
+                        prospecto.nombre +
+                          " " +
+                          prospecto.primerApellido +
+                          " " +
+                          prospecto.segundoApellido
+                      }}
+                    </md-option>
                   </md-select>
                 </md-field>
               </div>
               <div class="md-layout-item md-size-10 text-right">
-                  <md-button class="md-raised md-success"  @click="selectedprospect(idProspecto)">Buscar</md-button>
+                <md-button
+                  class="md-raised md-success"
+                  @click="selectedprospect(idProspecto)"
+                >
+                  Buscar
+                </md-button>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-33">
                 <md-field>
                   <label>Nombre prospecto</label>
-                  <md-input v-model="SelectedProspectos.nombre" disabled></md-input>
+                  <md-input
+                    v-model="SelectedProspectos.nombre"
+                    disabled
+                  ></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-50">
                 <md-field>
                   <label>Primer apellido</label>
-                  <md-input v-model="SelectedProspectos.primerApellido" disabled></md-input>
+                  <md-input
+                    v-model="SelectedProspectos.primerApellido"
+                    disabled
+                  ></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-50">
                 <md-field>
                   <label>Segundo Apellido</label>
-                  <md-input v-model="SelectedProspectos.segundoApellido" disabled></md-input>
+                  <md-input
+                    v-model="SelectedProspectos.segundoApellido"
+                    disabled
+                  ></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-50">
                 <md-field>
                   <label>RFC</label>
-                  <md-input v-model="SelectedProspectos.rfc" disabled></md-input>
+                  <md-input
+                    v-model="SelectedProspectos.rfc"
+                    disabled
+                  ></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-50">
                 <md-field>
                   <label>Calle</label>
-                  <md-input v-model="SelectedProspectos.calle" disabled></md-input>
+                  <md-input
+                    v-model="SelectedProspectos.calle"
+                    disabled
+                  ></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-33">
                 <md-field>
                   <label>Numero</label>
-                  <md-input v-model="SelectedProspectos.numero" disabled></md-input>
+                  <md-input
+                    v-model="SelectedProspectos.numero"
+                    disabled
+                  ></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-33">
                 <md-field>
                   <label>Colonia</label>
-                  <md-input v-model="SelectedProspectos.colonia" disabled></md-input>
+                  <md-input
+                    v-model="SelectedProspectos.colonia"
+                    disabled
+                  ></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-33">
@@ -76,22 +123,39 @@
               <div class="md-layout-item md-small-size-50 md-size-50">
                 <md-field>
                   <label>Telefono</label>
-                  <md-input v-model="SelectedProspectos.telefono" disabled></md-input>
+                  <md-input
+                    v-model="SelectedProspectos.telefono"
+                    disabled
+                  ></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-small-size-100 md-size-33">
-                <md-radio v-model="idEvaluacion" value="1"  class="md-primary">Autorizar</md-radio>
-                <md-radio v-model="idEvaluacion" value="2" class="md-primary">Rechazar</md-radio>
+                <md-radio v-model="idEvaluacion" value="1" class="md-primary">
+                  Autorizar
+                </md-radio>
+                <md-radio v-model="idEvaluacion" value="2" class="md-primary">
+                  Rechazar
+                </md-radio>
               </div>
-              <div v-if="idEvaluacion == 2" class="md-layout-item md-small-size-50 md-size-100">
+              <div
+                v-if="idEvaluacion == 2"
+                class="md-layout-item md-small-size-50 md-size-100"
+              >
                 <md-field>
                   <label>*Descripcion</label>
                   <md-input v-model="descripcionRechazo" type="text"></md-input>
                 </md-field>
               </div>
               <div class="md-layout-item md-size-100 text-right">
-                <md-button class="md-raised md-success" @click="actualizarProspectos(idProspecto)">Actualizar</md-button>
-                <md-button class="md-raised md-success" @click="Salir()">Salir</md-button>
+                <md-button
+                  class="md-raised md-success"
+                  @click="actualizarProspectos(idProspecto)"
+                >
+                  Actualizar
+                </md-button>
+                <md-button class="md-raised md-success" @click="Salir()">
+                  Salir
+                </md-button>
               </div>
             </div>
           </md-card-content>
