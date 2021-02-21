@@ -280,6 +280,7 @@ export default {
         if (willDelete.dismiss === Swal.DismissReason.cancel) {
           return;
         } else if (willDelete) {
+          this.$router.push("/dashboard");
           this.limpiar();
         }
       });
