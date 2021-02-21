@@ -64,7 +64,7 @@
               >
                 <img
                   v-bind:src="'http://localhost:5678/static/docs/' + doc.documento"
-                  alt="no jalo">
+                  alt="documentos del prospecto">
               </a>
             </div>
           </div>

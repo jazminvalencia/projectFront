@@ -129,15 +129,15 @@ export default {
           nombreDoc: null
         }
       ],
-      NombreProspecto: "Jazmin",
-      PrimerApellido: "Valencia",
-      SegundoApellido: "Bobadilla",
-      Calle: "colima",
-      Numero: "788",
-      rfc: "AJVB1998",
-      Colonia: "Rosales",
-      Telefono: "789678",
-      CodigoPostal: "80030",
+      NombreProspecto: null,
+      PrimerApellido: null,
+      SegundoApellido: null,
+      Calle: null,
+      Numero: null,
+      rfc: null,
+      Colonia: null,
+      Telefono: null,
+      CodigoPostal: null,
       errorProspecto: 0,
       errorMostrarMsjProspecto: []
     };
