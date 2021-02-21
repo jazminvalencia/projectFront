@@ -89,6 +89,9 @@
                 <label>Documento</label>
                 <md-file v-model="docs.single" @change="getDoc(docs, $event)" />
               </md-field>
+              <md-button v-if="counter.length != 1" @click="eliminarObjetos(docs)" class="md-raised md-success">
+                Eliminar documento
+              </md-button>
             </div>
           </div>
           <div class="md-layout-item text-right">
@@ -129,15 +132,15 @@ export default {
           nombreDoc: null
         }
       ],
-      NombreProspecto: null,
-      PrimerApellido: null,
-      SegundoApellido: null,
-      Calle: null,
-      Numero: null,
-      rfc: null,
-      Colonia: null,
-      Telefono: null,
-      CodigoPostal: null,
+      NombreProspecto: "",
+      PrimerApellido: "",
+      SegundoApellido: "",
+      Calle: "",
+      Numero: "",
+      rfc: "",
+      Colonia: "",
+      Telefono: "",
+      CodigoPostal: "",
       errorProspecto: 0,
       errorMostrarMsjProspecto: []
     };
@@ -284,6 +287,13 @@ export default {
         this.errorMostrarMsjProspecto.push(
           "El codigo postal no puede tener letras."
         );
+      var nombresDocumentos = this.counter.map(a => a.nombreDoc);
+      var unique = [...new Set(nombresDocumentos)];
+
+      if (JSON.stringify(nombresDocumentos) !== JSON.stringify(unique))
+        this.errorMostrarMsjProspecto.push(
+          "No puedes repetir nombres en los documentos."
+        );
 
       for (i; i < this.counter.length; i++) {
         if (!this.counter[i].single)
@@ -298,6 +308,9 @@ export default {
     },
     agregarObjetos() {
       this.counter.push({ single: null, nombreDoc: null });
+    },
+    eliminarObjetos(doc) {
+      this.counter = this.counter.filter( (item) => item !== doc );
     }
   }
 };

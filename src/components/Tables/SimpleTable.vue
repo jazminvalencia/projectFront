@@ -53,6 +53,7 @@
             v-for="doc in prospecto.documents"
             :key="doc.id">
             <div class="content-doc">
+              <br><br>
               <p>
                 <strong>Nombre de Documento:</strong>
                 {{ doc.nombredoc }}
@@ -61,10 +62,11 @@
               <a
                 target="_blank"
                 v-bind:href="'http://localhost:5678/static/docs/' + doc.documento"
+                v-if="doc.documento"
               >
                 <img
                   v-bind:src="'http://localhost:5678/static/docs/' + doc.documento"
-                  alt="documentos del prospecto">
+                  alt="presione este enlace" @error="setDoc">
               </a>
             </div>
           </div>
@@ -116,6 +118,9 @@ export default {
     close() {
       this.prospectoMostrar = [];
       this.first = false;
+    },
+    setDoc(event) {
+      event.target.src = "http://localhost:5678/static/docs.png";
     }
   },
   mounted() {
@@ -138,7 +143,7 @@ export default {
   overflow: auto;
 }
 .content-docs {
- justify-content: center;
+  justify-content: center;
   display: flex;
 }
 .content-doc {
