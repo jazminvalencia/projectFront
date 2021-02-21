@@ -87,7 +87,7 @@
             <div class="md-layout-item md-small-size-100 md-size-100">
               <md-field>
                 <label>Documento</label>
-                <md-file v-model="docs.single" />
+                <md-file v-model="docs.single" @change="getDoc(docs, $event)" />
               </md-field>
             </div>
           </div>
@@ -129,15 +129,15 @@ export default {
           nombreDoc: null
         }
       ],
-      NombreProspecto: null,
-      PrimerApellido: null,
-      SegundoApellido: null,
-      Calle: null,
-      Numero: null,
-      rfc: null,
-      Colonia: null,
-      Telefono: null,
-      CodigoPostal: null,
+      NombreProspecto: "sss",
+      PrimerApellido: "sss",
+      SegundoApellido: "sss",
+      Calle: "sss",
+      Numero: "123",
+      rfc: "sss",
+      Colonia: "sss",
+      Telefono: "22",
+      CodigoPostal: "22",
       errorProspecto: 0,
       errorMostrarMsjProspecto: []
     };
@@ -160,29 +160,48 @@ export default {
         cancelButtonText: "Cancelar",
         confirmButtonClass: "btn btn-success",
         cancelButtonClass: "btn btn-danger"
-      }).then((willDelete) => {
+      }).then(async willDelete => {
         if (willDelete.dismiss === Swal.DismissReason.cancel) {
           return;
         } else if (willDelete) {
-          axios.post(url, {
-              nombre: m.NombreProspecto,
-              primerApellido: m.PrimerApellido,
-              segundoApellido: m.SegundoApellido,
-              calle: m.Calle,
-              numero: m.Numero,
-              rfc: m.rfc,
-              colonia: m.Colonia,
-              telefono: m.Telefono,
-              cp: m.CodigoPostal
-            })
-            .then(response => {
-              this.limpiar();
-            })
-            .catch(e => {
-              console.log(e);
-            });
+          var prospecto = await axios.post(url, {
+            nombre: m.NombreProspecto,
+            primerApellido: m.PrimerApellido,
+            segundoApellido: m.SegundoApellido,
+            calle: m.Calle,
+            numero: m.Numero,
+            rfc: m.rfc,
+            colonia: m.Colonia,
+            telefono: m.Telefono,
+            cp: m.CodigoPostal
+          });
+          this.crearDocumento(prospecto.data.id);
+          this.limpiar();
         }
       });
+    },
+    crearDocumento(prospectoid) {
+      var m = this;
+      var fromData = new FormData();
+      var url = "http://localhost:5678/api/prospectos/upload";
+
+      fromData.append("prospectsId", prospectoid);
+      for (var doc of m.counter) {
+        fromData.append(doc.nombreDoc, doc.blob);
+      }
+      const options = {
+        method: "POST",
+        url,
+        headers: {
+          "contentType": false,
+          "mimeType": "multipart/form-data"
+        },
+        data: fromData
+      };
+      axios.request(options);
+    },
+    getDoc(doc, event) {
+      doc.blob = event.target.files[0];
     },
     Salir() {
       Swal.fire({

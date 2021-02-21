@@ -2,6 +2,9 @@
   <div>
     <md-table v-model="prospectosArray" :table-header-color="tableHeaderColor">
       <md-table-row slot="md-table-row" slot-scope="{ item }">
+         <md-table-cell md-label="id">
+          {{ item.id }}
+        </md-table-cell>
         <md-table-cell md-label="Nombre">{{ item.nombre }}</md-table-cell>
         <md-table-cell md-label="Primer Apellido">
           {{ item.primerApellido }}
@@ -9,7 +12,9 @@
         <md-table-cell md-label="Segundo Apellido">
           {{ item.segundoApellido }}
         </md-table-cell>
-        <md-table-cell md-label="Estatus">{{ item.estatusId }}</md-table-cell>
+        <md-table-cell md-label="Estatus">
+          {{ item.status.tipoEstatus }}
+        </md-table-cell>
         <md-table-cell md-label="informacion">
           <md-button
             @click="check(item)"
@@ -23,13 +28,31 @@
     </md-table>
     <md-dialog :md-active.sync="first">
       <md-dialog-title>informacion del prospecto</md-dialog-title>
-      <!-- <div v-for="prospecto in prospectoMostrar">
-            <p> <strong> El nombre del prospecto es: </strong>  {{prospecto.nombre}} {{prospecto.primerApellido}} {{prospecto.segundoApellido}}</p>
-            <p><strong>La direccion del prospecto es:</strong> Calle: {{prospecto.calle}}, Numero: {{prospecto.numero}}, Colonia: {{prospecto.colonia}}</p>
-            <p>Codigo Postal: {{prospecto.cp}}</p>
-            <p><strong>RFC:</strong>{{prospecto.rfc}}</p>
-             <p><strong>Telefono:</strong>{{prospecto.rfc}}</p>
-      </div> -->
+      <div v-for="prospecto in prospectoMostrar" :key="prospecto.id">
+        <p>
+          <strong> El nombre del prospecto es: </strong>
+          {{ prospecto.nombre }}
+          {{ prospecto.primerApellido }}
+          {{ prospecto.segundoApellido }}
+        </p>
+        <p>
+          <strong>La direccion del prospecto es:</strong>
+          Calle: {{ prospecto.calle }},Numero: {{ prospecto.numero }}, Colonia:
+          {{ prospecto.colonia }}
+        </p>
+        <p>Codigo Postal: {{ prospecto.cp }}</p>
+        <p><strong>RFC:</strong>{{ prospecto.rfc }}</p>
+        <p><strong>Telefono:</strong>{{ prospecto.rfc }}</p>
+        <p v-if="prospecto.statusId == 3">
+          <strong>Descripcion de Rechazo:</strong>
+          {{ prospecto.descripcionRechazo }}
+        </p>
+        <div v-for="doc in prospecto.documents" :key="doc.id">
+          <img
+            v-bind:src="'http://localhost:5678/static/docs/' + doc.documento"
+            alt="no jalo">
+        </div>
+      </div>
       <md-dialog-actions>
         <md-button class="md-primary" @click="close()">Cerrar</md-button>
       </md-dialog-actions>

@@ -192,11 +192,12 @@ export default {
     async listarProspectos() {
       let url = "http://localhost:5678/api/prospectos/";
       await axios.get(url).then(response => {
-        var respuesta = response.data;
-        this.prospectosArray = respuesta;
-      }).catch(e => {
-        console.log(e);
-      });
+          var respuesta = response.data;
+          this.prospectosArray = respuesta;
+        })
+        .catch(e => {
+          console.log(e);
+        });
     },
     async selectedprospect(idProspecto) {
       let url = "http://localhost:5678/api/prospectos/";
@@ -213,10 +214,10 @@ export default {
         return;
       }
       if (this.idEvaluacion == "1") {
-        this.estatusId = "2";
+        this.statusId = "2";
         this.descripcionRechazo = null;
       } else {
-        this.estatusId = "3";
+        this.statusId = "3";
       }
       Swal.fire({
         title: "¿Está seguro de actualizar este prospecto?",
@@ -233,20 +234,22 @@ export default {
           return;
         } else if (willDelete) {
           axios.put(url + idProspecto, {
-            estatusId: this.estatusId,
-            evaluacionId : this.idEvaluacion,
-            descripcionRechazo: this.descripcionRechazo,
-          }).then(response => {
-            this.limpiar();
-          }).catch(e => {
-            console.log(e);
-          });
+              statusId: this.statusId,
+              evaluationsId: this.evaluationsId,
+              descripcionRechazo: this.descripcionRechazo
+            })
+            .then(response => {
+              this.limpiar();
+            })
+            .catch(e => {
+              console.log(e);
+            });
         }
       });
     },
     limpiar() {
       this.idProspecto = "";
-      this.evaluacionId = "2";
+      this.evaluationsId = "2";
       this.descripcionRechazo = "";
       this.SelectedProspectos = [];
     },
