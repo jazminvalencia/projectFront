@@ -93,10 +93,8 @@ export default {
     },
     check(item) {
       this.prospectoMostrar = [];
-      console.log(item, "item");
       this.first = true;
       this.prospectoMostrar.push(item);
-      console.log(this.prospectoMostrar);
     },
     close() {
       this.prospectoMostrar = [];
