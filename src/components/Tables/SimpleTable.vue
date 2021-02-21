@@ -23,39 +23,53 @@
         </md-table-cell>
       </md-table-row>
     </md-table>
-    <md-dialog :md-active.sync="first">
-      <md-dialog-title>informacion del prospecto</md-dialog-title>
-      <div v-for="prospecto in prospectoMostrar" :key="prospecto.id">
-        <p>
-          <strong> El nombre del prospecto es: </strong>
-          {{ prospecto.nombre }}
-          {{ prospecto.primerApellido }}
-          {{ prospecto.segundoApellido }}
-        </p>
-        <p>
-          <strong>La direccion del prospecto es:</strong>
-          Calle: {{ prospecto.calle }},Numero: {{ prospecto.numero }}, Colonia:
-          {{ prospecto.colonia }}
-        </p>
-        <p>Codigo Postal: {{ prospecto.cp }}</p>
-        <p><strong>RFC:</strong>{{ prospecto.rfc }}</p>
-        <p><strong>Telefono:</strong>{{ prospecto.rfc }}</p>
-        <p v-if="prospecto.statusId == 3">
-          <strong>Descripcion de Rechazo:</strong>
-          {{ prospecto.descripcionRechazo }}
-        </p>
-        <div v-for="doc in prospecto.documents" :key="doc.id">
+    <md-dialog scrollable :md-active.sync="first">
+      <md-dialog-title class="title-modal">
+        informacion del prospecto
+      </md-dialog-title>
+      <md-content class="md-scrollbar container">
+        <div v-for="prospecto in prospectoMostrar" :key="prospecto.id">
           <p>
-            <strong>Nombre de Documento:</strong>
-            {{ doc.nombredoc }}
+            <strong> El nombre del prospecto es: </strong>
+            {{ prospecto.nombre }}
+            {{ prospecto.primerApellido }}
+            {{ prospecto.segundoApellido }}
           </p>
-          <a class="content-doc" target="_blank" v-bind:href="'http://localhost:5678/static/docs/' + doc.documento">
-            <img
-              v-bind:src="'http://localhost:5678/static/docs/' + doc.documento"
-              alt="no jalo">
-          </a>
+          <p>
+            <strong>La direccion del prospecto es:</strong>
+            Calle: {{ prospecto.calle }},Numero: {{ prospecto.numero }}, Colonia:
+            {{ prospecto.colonia }}
+          </p>
+          <p>Codigo Postal: {{ prospecto.cp }}</p>
+          <p><strong>RFC:</strong>{{ prospecto.rfc }}</p>
+          <p><strong>Telefono:</strong>{{ prospecto.telefono }}</p>
+          <p v-if="prospecto.statusId == 3">
+            <strong>Descripcion de Rechazo:</strong>
+            {{ prospecto.descripcionRechazo }}
+          </p>
+          <p class="content-docs"><strong>Documentos: </strong></p>
+          <div
+            class="content-docs"
+            v-for="doc in prospecto.documents"
+            :key="doc.id">
+            <div class="content-doc">
+              <p>
+                <strong>Nombre de Documento:</strong>
+                {{ doc.nombredoc }}
+              </p>
+              presione la imagen para ver en pantalla completa
+              <a
+                target="_blank"
+                v-bind:href="'http://localhost:5678/static/docs/' + doc.documento"
+              >
+                <img
+                  v-bind:src="'http://localhost:5678/static/docs/' + doc.documento"
+                  alt="no jalo">
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
+      </md-content>
       <md-dialog-actions>
         <md-button class="md-primary" @click="close()">Cerrar</md-button>
       </md-dialog-actions>
@@ -112,9 +126,30 @@ export default {
 </script>
 
 <style>
-.content-doc img{
-  border: 1px solid red;
+.title-modal {
+  text-align: center;
+}
+.container {
+  padding: 10pt;
+}
+.md-content {
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+}
+.content-docs {
+ justify-content: center;
+  display: flex;
+}
+.content-doc {
+  text-align: center;
   width: 50%;
   height: 50%;
+}
+.content-doc img {
+  display: inline-block;
+  width: 100%;
+  height: 50%;
+  text-align: center;
 }
 </style>

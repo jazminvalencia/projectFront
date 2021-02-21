@@ -129,15 +129,15 @@ export default {
           nombreDoc: null
         }
       ],
-      NombreProspecto: "sss",
-      PrimerApellido: "sss",
-      SegundoApellido: "sss",
-      Calle: "sss",
-      Numero: "123",
-      rfc: "sss",
-      Colonia: "sss",
-      Telefono: "22",
-      CodigoPostal: "22",
+      NombreProspecto: "Jazmin",
+      PrimerApellido: "Valencia",
+      SegundoApellido: "Bobadilla",
+      Calle: "colima",
+      Numero: "788",
+      rfc: "AJVB1998",
+      Colonia: "Rosales",
+      Telefono: "789678",
+      CodigoPostal: "80030",
       errorProspecto: 0,
       errorMostrarMsjProspecto: []
     };
@@ -180,12 +180,12 @@ export default {
         }
       });
     },
-    crearDocumento(prospectoid) {
+    crearDocumento(prospectId) {
       var m = this;
       var fromData = new FormData();
       var url = "http://localhost:5678/api/prospectos/upload";
 
-      fromData.append("prospectsId", prospectoid);
+      fromData.append("prospectId", prospectId);
       for (var doc of m.counter) {
         fromData.append(doc.nombreDoc, doc.blob);
       }
@@ -193,8 +193,8 @@ export default {
         method: "POST",
         url,
         headers: {
-          "contentType": false,
-          "mimeType": "multipart/form-data"
+          contentType: false,
+          mimeType: "multipart/form-data"
         },
         data: fromData
       };
@@ -215,10 +215,11 @@ export default {
         cancelButtonText: "Cancelar",
         confirmButtonClass: "btn btn-success",
         cancelButtonClass: "btn btn-danger"
-      }).then((willDelete) => {
+      }).then(willDelete => {
         if (willDelete.dismiss === Swal.DismissReason.cancel) {
           return;
-        } else if(willDelete) {
+        } else if (willDelete) {
+          this.$router.push("/dashboard");
           this.limpiar();
         }
       });
