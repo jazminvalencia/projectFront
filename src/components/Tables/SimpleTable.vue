@@ -2,9 +2,6 @@
   <div>
     <md-table v-model="prospectosArray" :table-header-color="tableHeaderColor">
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-         <md-table-cell md-label="id">
-          {{ item.id }}
-        </md-table-cell>
         <md-table-cell md-label="Nombre">{{ item.nombre }}</md-table-cell>
         <md-table-cell md-label="Primer Apellido">
           {{ item.primerApellido }}
@@ -48,9 +45,15 @@
           {{ prospecto.descripcionRechazo }}
         </p>
         <div v-for="doc in prospecto.documents" :key="doc.id">
-          <img
-            v-bind:src="'http://localhost:5678/static/docs/' + doc.documento"
-            alt="no jalo">
+          <p>
+            <strong>Nombre de Documento:</strong>
+            {{ doc.nombredoc }}
+          </p>
+          <a class="content-doc" target="_blank" v-bind:href="'http://localhost:5678/static/docs/' + doc.documento">
+            <img
+              v-bind:src="'http://localhost:5678/static/docs/' + doc.documento"
+              alt="no jalo">
+          </a>
         </div>
       </div>
       <md-dialog-actions>
@@ -107,3 +110,11 @@ export default {
   }
 };
 </script>
+
+<style>
+.content-doc img{
+  border: 1px solid red;
+  width: 50%;
+  height: 50%;
+}
+</style>
