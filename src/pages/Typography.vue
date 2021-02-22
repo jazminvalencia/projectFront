@@ -190,7 +190,7 @@ export default {
   },
   methods: {
     async listarProspectos() {
-      let url = "http://143.198.18.255:5678/api/prospectos/";
+      let url = "http://localhost:5678/api/prospectos/";
       await axios.get(url).then(response => {
           var respuesta = response.data;
           this.prospectosArray = respuesta;
@@ -200,7 +200,7 @@ export default {
         });
     },
     async selectedprospect(idProspecto) {
-      let url = "http://143.198.18.255:5678/api/prospectos/";
+      let url = "http://localhost:5678/api/prospectos/";
       await axios.get(url + idProspecto).then(response => {
         var respuesta = response.data;
         this.SelectedProspectos = respuesta;
@@ -209,7 +209,7 @@ export default {
       });
     },
     actualizarProspectos(idProspecto) {
-      let url = "http://143.198.18.255:5678/api/prospectos/";
+      let url = "http://localhost:5678/api/prospectos/";
       if (this.validar()) {
         return;
       }
