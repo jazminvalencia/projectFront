@@ -71,7 +71,7 @@
               <md-input v-model="CodigoPostal" type="text"></md-input>
             </md-field>
           </div>
-          <div class="md-layout-item md-small-size-50 md-size-50">
+          <div class="md-layout-item md-small-size-100 md-size-50">
             <md-field>
               <label>*Telefono</label>
               <md-input v-model="Telefono" type="tel"></md-input>
@@ -148,7 +148,7 @@ export default {
   methods: {
     crearProspecto() {
       var m = this;
-      var url = "http://localhost:5678/api/prospectos/";
+      var url = "http://143.198.18.255:5678/api/prospectos/";
 
       if (this.validar()) {
         return;
@@ -186,7 +186,7 @@ export default {
     crearDocumento(prospectId) {
       var m = this;
       var fromData = new FormData();
-      var url = "http://localhost:5678/api/prospectos/upload";
+      var url = "http://143.198.18.255:5678/api/prospectos/upload";
 
       fromData.append("prospectId", prospectId);
       for (var doc of m.counter) {
