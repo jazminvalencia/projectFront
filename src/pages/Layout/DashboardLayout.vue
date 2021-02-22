@@ -16,7 +16,7 @@
         <md-icon>content_paste</md-icon>
         <p>listado de prospecto</p>
       </sidebar-link>
-      <sidebar-link to="/typography">
+      <sidebar-link to="/update">
         <md-icon>check</md-icon>
         <p>Evaluacion de prospecto</p>
       </sidebar-link>
