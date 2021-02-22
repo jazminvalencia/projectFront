@@ -61,11 +61,11 @@
               presione la imagen para ver en pantalla completa
               <a
                 target="_blank"
-                v-bind:href="'http://localhost:5678/static/docs/' + doc.documento"
+                v-bind:href="'http://143.198.18.255:5678/static/docs/' + doc.documento"
                 v-if="doc.documento"
               >
                 <img
-                  v-bind:src="'http://localhost:5678/static/docs/' + doc.documento"
+                  v-bind:src="'http://143.198.18.255:5678/static/docs/' + doc.documento"
                   alt="presione este enlace" @error="setDoc">
               </a>
             </div>
@@ -100,7 +100,7 @@ export default {
   methods: {
     async listarProspectos() {
       var m = this;
-      let url = "http://localhost:5678/api/prospectos/";
+      let url = "http://143.198.18.255:5678/api/prospectos/";
       await axios.get(url)
         .then(response => {
           var respuesta = response.data;
@@ -120,7 +120,7 @@ export default {
       this.first = false;
     },
     setDoc(event) {
-      event.target.src = "http://localhost:5678/static/docs.png";
+      event.target.src = "http://143.198.18.255:5678/static/docs.png";
     }
   },
   mounted() {

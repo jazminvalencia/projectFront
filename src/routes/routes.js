@@ -26,7 +26,7 @@ const routes = [
         component: TableList
       },
       {
-        path: "typography",
+        path: "update",
         name: "Evaluacion de prospectos",
         component: Typography
       }
